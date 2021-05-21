@@ -44,11 +44,6 @@ class labelme2coco(object):
 
     def image(self, data, num, file_name):
         image = {}
-        # print(data['imageData'])
-        # img = img_b64_to_arr(data['imageData'])
-        #
-        # height, width = img.shape[:2]
-        # img = None
         image['height'] = data['imageHeight']
         image['width'] = data['imageWidth']
         image['id'] = int(num + 1)
@@ -96,15 +91,10 @@ class labelme2coco(object):
         return -1
 
     def getbbox(self, points):
-        # img = np.zeros([self.height,self.width],np.uint8)
-        # cv2.polylines(img, [np.asarray(points)], True, 1, lineType=cv2.LINE_AA)
-        # cv2.fillPoly(img, [np.asarray(points)], 1)
-        polygons = points
         mask = self.polygons_to_mask([self.height, self.width], polygons)
         return self.mask2box(mask)
 
     def mask2box(self, mask):
-        # np.where(mask==1)
         index = np.argwhere(mask == 1)
         rows = index[:, 0]
         clos = index[:, 1]
